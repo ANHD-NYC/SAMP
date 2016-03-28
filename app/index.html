@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <title>SAMP Demo</title>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
+  <![endif]-->
+  <style>
+    html, body {width:100%; height:100%; padding: 0; margin: 0;}
+    #map { width: 100%; height:100%; background: #000;}
+  </style>
+</head>
+<body>
+  <div id='map'></div>
+  <script>
+    var map,
+        vizJSON = 'https://anhdnyc.cartodb.com/api/v2/viz/5f766004-d513-11e5-811e-0e674067d321/viz.json',
+        basemapLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+          });
+
+    function init(){
+      // initiate leaflet map
+      map = new L.Map('map', { 
+        center: [40.694045,-73.946571],
+        zoom: 12
+      });
+
+      map.addLayer(basemapLayer);
+
+      cartodb.createLayer(map, vizJSON)
+        .addTo(map)
+        .on('done', function(layer) {
+          console.log(layer);
+          layer.setInteraction(true);
+          layer.on('featureOver', function(e, latlng, pos, data, layerNumber) {
+            // console.log(e, latlng, pos, data, layerNumber);
+          });
+        }).on('error', function() {
+          //log the error
+        });
+    }
+
+    $(document).ready(init);
+  </script>
+</body>
+</html>
