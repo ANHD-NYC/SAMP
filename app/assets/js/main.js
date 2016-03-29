@@ -5,7 +5,7 @@ var map,
     vizJSON,
     basemapLayer,
     layerToggle,
-    mapLayers = {},
+    mapLayers,
     sql;
 
 app.map = (function(w, d, L, $) {
@@ -27,19 +27,51 @@ app.map = (function(w, d, L, $) {
   function createCDBLayer() {
     // adds the CartoDB overlay from the viz.json URL
     vizJSON = 'https://anhdnyc.cartodb.com/api/v2/viz/d7c7286a-f50f-11e5-8c19-0ecfd53eb7d3/viz.json';
+
+    // for use with CartoDB's 'Named Maps API', not quite sure if this is necessary...
+    var layerSource = {
+      user_name: 'anhdnyc',
+      type: 'namedmap',
+      named_map: {
+        name: 'samp_test',
+        layers: [
+          {
+            layer_name: "samp_select_mapluto", // Optional
+            interactivity: "cartodb_id,address,bbl" // Optional
+          },
+          {
+            layer_name: "nycc",
+            interactivity: "cartodb_id,coundist"
+          },
+          {
+            layer_name: "nycd",
+            interactivity: "cartodb_id,borocd"
+          }
+        ],
+        params: {}
+      }
+    }
     
     cartodb.createLayer(map, vizJSON)
       .addTo(map)
       .on('done', function(layer) {
 
-        console.log(layer);
+        mapLayers = [];
+        var i = 0, sublayerCount = layer.getSubLayerCount();
 
-        // to do: create layers for CB & CB boundaries, or add them to the viz in the CDB dashboard
+        for (i; i < sublayerCount; i++) {
+          mapLayers.push(layer.getSubLayer(i));
+        }
+
+        mapLayers[1].hide();
+        mapLayers[2].hide();
 
         layer.setInteraction(true);
+        
         layer.on('featureOver', function(e, latlng, pos, data, layerNumber) {
           // console.log(e, latlng, pos, data, layerNumber);
         });
+
       }).on('error', function(error) {
         console.log('error loading CDB data', error);
       });
@@ -73,14 +105,16 @@ app.map = (function(w, d, L, $) {
         return true;
       },
       cd: function() {
-        // update cartocss
-        // update sql
+        // to do: bring layer to front
+        // toggle council districts layer on / off
+        mapLayers[2].toggle();
         // if legend render legend
         return true;
       },
       cb: function() {
-        // update cartocss
-        // update sql
+        // to do: bring layer to front
+        // toggle community boards layer on/off
+        mapLayers[1].toggle();
         // if legend render legend
         return true;
       }
