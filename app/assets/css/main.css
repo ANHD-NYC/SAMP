@@ -19,3 +19,29 @@ html, body {
   position: relative;
   background: #000;
 }
+
+.top {
+  top: 25px;
+}
+
+.left {
+  left: 25px;
+}
+
+.bottom {
+  bottom: 25px;
+}
+
+.right {
+  right: 25px;
+}
+
+.ui {
+  width: 250px;
+  height: auto;
+  padding: 15px;
+  position: absolute;
+  z-index: 999;
+  background-color: rgb(255,255,255);
+  text-align: left;
+}
