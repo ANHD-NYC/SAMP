@@ -41,6 +41,14 @@
           "cartocss": "#nycd { polygon-opacity: 0; line-color: <%= nycd_boundary %>; line-width: 0.4; line-opacity: 1; }",
           "sql": "select * from nycd"
         }
+      },
+      {
+        "type": "cartodb",
+        "options": {
+          "cartocss_version": "2.1.1",
+          "cartocss": "#samp_select_mapluto_jc{polygon-fill:#FFFFB2;polygon-opacity:0.8;line-color:#FFF;line-width:0;line-opacity:0;}#samp_select_mapluto_jc[jobcount<=113]{polygon-fill:#BD0026;}#samp_select_mapluto_jc[jobcount<=46]{polygon-fill:#F03B20;}#samp_select_mapluto_jc[jobcount<=34]{polygon-fill:#FD8D3C;}#samp_select_mapluto_jc[jobcount<=22]{polygon-fill:#FECC5C;}#samp_select_mapluto_jc[jobcount<=11]{polygon-fill:#FFFFB2;}",
+          "sql": "select * from samp_select_mapluto_jc"
+        }
       }
     ]
   },
