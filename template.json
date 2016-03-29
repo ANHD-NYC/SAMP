@@ -1,0 +1,60 @@
+{
+  "version": "0.0.1",
+  "name": "samp_test",
+  "placeholders": {
+    "color": {
+      "type": "css_color",
+      "default": "#FF6600"
+    },
+    "nycc_boundary": {
+      "type": "css_color",
+      "default": "#FFF"
+    },
+    "nycd_boundary": {
+      "type": "css_color",
+      "default": "blue"
+    }
+  },
+  "layergroup": {
+    "version": "1.0.1",
+    "layers": [
+      {
+        "type": "cartodb",
+        "options": {
+          "cartocss_version": "2.1.1",
+          "cartocss": "#samp_select_mapluto { polygon-fill: <%= color %>; polygon-opacity: 0.7; line-width: 0; line-opacity: 0; }",
+          "sql": "select * from samp_select_mapluto"
+        }
+      },
+      {
+        "type": "cartodb",
+        "options": {
+          "cartocss_version": "2.1.1",
+          "cartocss": "#nycc { polygon-opacity: 0; line-color: <%= nycc_boundary %>; line-width: 0.4; line-opacity: 1; }",
+          "sql": "select * from nycc"
+        }
+      },
+      {
+        "type": "cartodb",
+        "options": {
+          "cartocss_version": "2.1.1",
+          "cartocss": "#nycd { polygon-opacity: 0; line-color: <%= nycd_boundary %>; line-width: 0.4; line-opacity: 1; }",
+          "sql": "select * from nycd"
+        }
+      }
+    ]
+  },
+  "view": {
+    "zoom": 12,
+    "center": {
+      "lng": -73.946571,
+      "lat": 40.694045
+    },
+    "bounds": {
+      "west": -74.884186,
+      "south": 40.321420,
+      "east": -73.013763,
+      "north": 41.022391
+    }
+  }
+}
