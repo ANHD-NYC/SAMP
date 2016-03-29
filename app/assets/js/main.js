@@ -6,6 +6,7 @@ var map,
     basemapLayer,
     layerToggle,
     mapLayers,
+    carto,
     sql;
 
 app.map = (function(w, d, L, $) {
@@ -27,8 +28,11 @@ app.map = (function(w, d, L, $) {
   function createCDBLayer() {
     // adds the CartoDB overlay from the viz.json URL
     vizJSON = 'https://anhdnyc.cartodb.com/api/v2/viz/d7c7286a-f50f-11e5-8c19-0ecfd53eb7d3/viz.json';
+    // grab cartocss object
+    carto = app.cartocss;
 
-    // for use with CartoDB's 'Named Maps API', not quite sure if this is necessary...
+    // for use with CartoDB's 'Named Maps API', haven't 
+    // figured out how to use this & toggle the sublayers
     var layerSource = {
       user_name: 'anhdnyc',
       type: 'namedmap',
@@ -36,16 +40,16 @@ app.map = (function(w, d, L, $) {
         name: 'samp_test',
         layers: [
           {
-            layer_name: "samp_select_mapluto", // Optional
-            interactivity: "cartodb_id,address,bbl" // Optional
+            layer_name: "samp_select_mapluto"
           },
           {
-            layer_name: "nycc",
-            interactivity: "cartodb_id,coundist"
+            layer_name: "nycc"
           },
           {
-            layer_name: "nycd",
-            interactivity: "cartodb_id,borocd"
+            layer_name: "nycd"
+          },
+          {
+            layer_name: "samp_select_mapluto_jc"
           }
         ],
         params: {}
@@ -63,14 +67,11 @@ app.map = (function(w, d, L, $) {
           mapLayers.push(layer.getSubLayer(i));
         }
 
-        mapLayers[1].hide();
-        mapLayers[2].hide();
+        mapLayers[1].hide(); // community board boundaries
+        mapLayers[2].hide(); // city council districts
+        mapLayers[3].hide(); // dob jobs
 
-        layer.setInteraction(true);
-        
-        layer.on('featureOver', function(e, latlng, pos, data, layerNumber) {
-          // console.log(e, latlng, pos, data, layerNumber);
-        });
+        layer.setInteraction(true);        
 
       }).on('error', function(error) {
         console.log('error loading CDB data', error);
@@ -80,42 +81,44 @@ app.map = (function(w, d, L, $) {
   function wireLayerBtns() {
     // wires the UI map layer buttons to CartoDB
     layerToggle = {
+      // hide / show the default map layer (speculation score)
       score : function() {
-        // update cartocss
-        // update sql
-        // if legend render legend
+        if (mapLayers[0].isVisible()) {
+          mapLayers[0].hide();
+        } else {
+          mapLayers[0].show();
+        }
+
         return true;
       },
       dob: function() {
-        // update cartocss
-        // update sql
-        // if legend render legend
+        // hide show the dob jobs layer
+        if (!mapLayers[3].isVisible()) {
+          mapLayers[0].hide();
+          mapLayers[3].show();
+        } else {
+          mapLayers[0].show();
+          mapLayers[3].hide();
+        }
+        
         return true;
       },
       rent: function() {
-        // update cartocss
-        // update sql
-        // if legend render legend
+        // hide show the change in RS layer
         return true;
       },
       combined: function() {
-        // update cartocss
-        // update sql
-        // if legend render legend
+        // hide show the combined alert score
         return true;
       },
       cd: function() {
-        // to do: bring layer to front
-        // toggle council districts layer on / off
+        // hide / show council districts
         mapLayers[2].toggle();
-        // if legend render legend
         return true;
       },
       cb: function() {
-        // to do: bring layer to front
-        // toggle community boards layer on/off
+        // hide / show community boards
         mapLayers[1].toggle();
-        // if legend render legend
         return true;
       }
     }
@@ -125,7 +128,6 @@ app.map = (function(w, d, L, $) {
       $('.map-layers .button').removeClass('selected');
       $(this).addClass('selected');
       layerToggle[$(this).attr('id')]();
-      // + potentially show layers if they hidden
     });
   }
 
