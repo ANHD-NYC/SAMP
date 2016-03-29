@@ -31,8 +31,8 @@ app.map = (function(w, d, L, $) {
     // grab cartocss object
     carto = app.cartocss;
 
-    // for use with CartoDB's 'Named Maps API', haven't 
-    // figured out how to use this & toggle the sublayers
+    // for use with CartoDB's 'Named Maps API', loads data but
+    // currently doesn't work with toggling the sublayers
     var layerSource = {
       user_name: 'anhdnyc',
       type: 'namedmap',
@@ -40,7 +40,8 @@ app.map = (function(w, d, L, $) {
         name: 'samp_test',
         layers: [
           {
-            layer_name: "samp_select_mapluto"
+            layer_name: "samp_select_mapluto",
+            interactivity: 'cartodb_id, address, bbl'
           },
           {
             layer_name: "nycc"
@@ -49,31 +50,35 @@ app.map = (function(w, d, L, $) {
             layer_name: "nycd"
           },
           {
-            layer_name: "samp_select_mapluto_jc"
+            layer_name: "samp_select_mapluto_jc",
+            interactivity: 'cartodb_id, address, bbl, a1, a2, a3, nb, yearbuilt'
           }
-        ],
-        params: {}
+        ]
       }
-    }
+    };
     
     cartodb.createLayer(map, vizJSON)
       .addTo(map)
-      .on('done', function(layer) {
+      .done(function(layer) {
 
         mapLayers = [];
         var i = 0, sublayerCount = layer.getSubLayerCount();
 
         for (i; i < sublayerCount; i++) {
-          mapLayers.push(layer.getSubLayer(i));
+          var sublayer = layer.getSubLayer(i);
+          sublayer.setInteraction(true);
+          mapLayers.push(sublayer);
         }
+
+        /* when using the layerSource object, create infowindows like so: */
+        // cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['cartodb_id', 'address','bbl']);
 
         mapLayers[1].hide(); // community board boundaries
         mapLayers[2].hide(); // city council districts
         mapLayers[3].hide(); // dob jobs
 
-        layer.setInteraction(true);        
-
-      }).on('error', function(error) {
+      })
+      .error(function(error) {
         console.log('error loading CDB data', error);
       });
   }

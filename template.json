@@ -1,5 +1,8 @@
 {
   "version": "0.0.1",
+  "auth": {
+    "method": "open"
+  },
   "name": "samp_test",
   "placeholders": {
     "color": {
@@ -16,14 +19,14 @@
     }
   },
   "layergroup": {
-    "version": "1.0.1",
     "layers": [
       {
         "type": "cartodb",
         "options": {
           "cartocss_version": "2.1.1",
           "cartocss": "#samp_select_mapluto { polygon-fill: <%= color %>; polygon-opacity: 0.7; line-width: 0; line-opacity: 0; }",
-          "sql": "select * from samp_select_mapluto"
+          "sql": "select * from samp_select_mapluto",
+          "interactivity": ["cartodb_id", "address", "bbl", "est2011"]
         }
       },
       {
@@ -31,23 +34,26 @@
         "options": {
           "cartocss_version": "2.1.1",
           "cartocss": "#nycc { polygon-opacity: 0; line-color: <%= nycc_boundary %>; line-width: 0.4; line-opacity: 1; }",
-          "sql": "select * from nycc"
+          "sql": "select * from nycc",
+          "interactivity": ["cartodb_id"]
         }
       },
       {
         "type": "cartodb",
         "options": {
           "cartocss_version": "2.1.1",
-          "cartocss": "#nycd { polygon-opacity: 0; line-color: <%= nycd_boundary %>; line-width: 0.4; line-opacity: 1; }",
-          "sql": "select * from nycd"
+          "cartocss": "#nycd { polygon-fill:#2dc103;polygon-opacity:0;line-color:#a53ed5;line-width:0.4;line-opacity:1;} #nycd::labels{text-name:[borocd];text-face-name:'DejaVu Sans Book';text-size:14;text-label-position-tolerance:0;text-fill:#a53ed5;text-halo-fill:#333333;text-halo-radius:1;text-dy:0;text-allow-overlap:true;text-placement:interior;text-placement-type:simple;}",
+          "sql": "select * from nycd",
+          "interactivity": ["cartodb_id"]
         }
       },
       {
         "type": "cartodb",
         "options": {
           "cartocss_version": "2.1.1",
-          "cartocss": "#samp_select_mapluto_jc{polygon-fill:#FFFFB2;polygon-opacity:0.8;line-color:#FFF;line-width:0;line-opacity:0;}#samp_select_mapluto_jc[jobcount<=113]{polygon-fill:#BD0026;}#samp_select_mapluto_jc[jobcount<=46]{polygon-fill:#F03B20;}#samp_select_mapluto_jc[jobcount<=34]{polygon-fill:#FD8D3C;}#samp_select_mapluto_jc[jobcount<=22]{polygon-fill:#FECC5C;}#samp_select_mapluto_jc[jobcount<=11]{polygon-fill:#FFFFB2;}",
-          "sql": "select * from samp_select_mapluto_jc"
+          "cartocss": "#samp_select_mapluto_jc { polygon-fill:#FFFFB2;polygon-opacity:0.8;line-color:#FFF;line-width:0;line-opacity:0;}#samp_select_mapluto_jc[jobcount<=113]{polygon-fill:#BD0026;}#samp_select_mapluto_jc[jobcount<=46]{polygon-fill:#F03B20;}#samp_select_mapluto_jc[jobcount<=34]{polygon-fill:#FD8D3C;}#samp_select_mapluto_jc[jobcount<=22]{polygon-fill:#FECC5C;}#samp_select_mapluto_jc[jobcount<=11]{polygon-fill:#FFFFB2;}",
+          "sql": "select * from samp_select_mapluto_jc",
+          "interactivity": ["cartodb_id", "address", "bbl", "jobcount", "a1", "a2", "a3", "nb", "unitsres", "yearbuilt"]
         }
       }
     ]
@@ -59,10 +65,10 @@
       "lat": 40.694045
     },
     "bounds": {
-      "west": -74.884186,
-      "south": 40.321420,
-      "east": -73.013763,
-      "north": 41.022391
+      "west": -45,
+      "south": -45,
+      "east": 45,
+      "north": 45
     }
   }
 }
