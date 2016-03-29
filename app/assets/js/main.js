@@ -118,11 +118,17 @@ app.map = (function(w, d, L, $) {
       },
       cd: function() {
         // hide / show council districts
+        if (mapLayers[1].isVisible()) {
+          mapLayers[1].hide();
+        }
         mapLayers[2].toggle();
         return true;
       },
       cb: function() {
         // hide / show community boards
+        if (mapLayers[2].isVisible()) {
+          mapLayers[2].hide();
+        }
         mapLayers[1].toggle();
         return true;
       }
