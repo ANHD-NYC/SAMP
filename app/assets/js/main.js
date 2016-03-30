@@ -9,7 +9,7 @@ var map,
     carto,
     sql;
 
-app.map = (function(w, d, L, $, async) {
+app.map = (function(w, d, L, $) {
 
   function initMap() {
     // initiates the Leaflet map
@@ -236,4 +236,4 @@ app.map = (function(w, d, L, $, async) {
     init: init
   };
 
-})(window, document, L, jQuery, async);
+})(window, document, L, jQuery);
