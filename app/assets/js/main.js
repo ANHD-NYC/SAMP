@@ -9,7 +9,7 @@ var map,
     carto,
     sql;
 
-app.map = (function(w, d, L, $) {
+app.map = (function(w, d, L, $, async) {
 
   function initMap() {
     // initiates the Leaflet map
@@ -23,6 +23,9 @@ app.map = (function(w, d, L, $) {
     });
 
     map.addLayer(basemapLayer);
+
+    // set the cartodb sql object up
+    sql = cartodb.SQL({ user: 'anhdnyc' });
   }
 
   function createCDBLayer() {
@@ -66,15 +69,17 @@ app.map = (function(w, d, L, $) {
 
         for (i; i < sublayerCount; i++) {
           var sublayer = layer.getSubLayer(i);
-          sublayer.setInteraction(true);
           mapLayers.push(sublayer);
         }
 
         /* when using the layerSource object, create infowindows like so: */
         // cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['cartodb_id', 'address','bbl']);
 
+        mapLayers[0].show(); // default data 
         mapLayers[1].hide(); // community board boundaries
+        mapLayers[1].setInteraction(false);
         mapLayers[2].hide(); // city council districts
+        mapLayers[2].setInteraction(false);
         mapLayers[3].hide(); // dob jobs
 
       })
@@ -120,6 +125,7 @@ app.map = (function(w, d, L, $) {
         // hide / show council districts
         if (mapLayers[1].isVisible()) {
           mapLayers[1].hide();
+          $('.go-to-cb :nth-child(1)').prop('selected', true);
         }
         mapLayers[2].toggle();
         return true;
@@ -127,7 +133,9 @@ app.map = (function(w, d, L, $) {
       cb: function() {
         // hide / show community boards
         if (mapLayers[2].isVisible()) {
+          debugger;
           mapLayers[2].hide();
+          $('.go-to-cc :nth-child(1)').prop('selected', true);
         }
         mapLayers[1].toggle();
         return true;
@@ -142,14 +150,90 @@ app.map = (function(w, d, L, $) {
     });
   }
 
+  function createSelect() {
+
+    function createOptions(arr, name) {
+      var toReturn = '';
+      var first = name === 'coundist' ? '<option val="">Select a Council District</option>' :
+        '<option val="">Select a Community Board</option>';
+      var geoName = name === 'coundist' ? 'Council District ' : 'Community Board ';
+      
+      toReturn += first;
+      
+      toReturn += arr.map(function(el){
+        return '<option value="' + el[name] + '">' + 
+          geoName + el[name] + '</option>';
+      }).join('');
+
+      return toReturn;
+    }
+
+    function buildSelect(className, options) {
+      $(className).append(options);
+    }
+
+    function initCC() {
+      sql.execute('SELECT coundist FROM nycc order by coundist asc')
+        .done(function(data){
+          buildSelect('.go-to-cc', createOptions(data.rows, 'coundist'));
+          initCB();
+        });
+    }
+
+    function initCB() {
+      sql.execute('SELECT borocd FROM nycd order by borocd asc')
+        .done(function(data){
+          buildSelect('.go-to-cb', createOptions(data.rows, 'borocd'));
+          selectEvents();
+        });
+    }
+
+
+    function selectEvents() {
+      $('.go-to-cc').on('change', function(e){
+        // set the other select to first option
+        $('.go-to-cb :nth-child(1)').prop('selected', true);
+        getCC($(this).val());
+      });
+
+      $('.go-to-cb').on('change', function(e){
+        // set the other select to first option
+        $('.go-to-cc :nth-child(1)').prop('selected', true);
+        getCB($(this).val());
+      });
+    }
+
+    initCC();
+  }
+
+  function getCC(num) {
+    // to set the map position to a certain cc or cb
+    sql.getBounds('SELECT * FROM nycc WHERE coundist = {{id}}', { id: num })
+      .done(function(data){
+        mapLayers[1].hide();
+        mapLayers[2].show();
+        map.fitBounds(data);
+      });
+  }
+
+  function getCB(num) {
+    sql.getBounds('SELECT * FROM nycd WHERE borocd = {{id}}', { id: num })
+      .done(function(data){
+        mapLayers[2].hide();
+        mapLayers[1].show();
+        map.fitBounds(data);
+      });
+  }
+
   function init(){
     initMap();
     createCDBLayer();
     wireLayerBtns();
+    createSelect();
   }
 
   return {
     init: init
   };
 
-})(window, document, L, jQuery);
+})(window, document, L, jQuery, async);

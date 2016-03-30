@@ -19,12 +19,19 @@
       <button id='cd' data="2">Council Districts</button>
       <button id='cb' data="1">Community Boards</button>
 
+      <hr>
+
       <!-- to do: add selects for filtering by CC or CB -->
-      <!-- <select id=''></select> -->
+      <h6>Go to a City Council District</h6>
+      <select class='go-to-cc'></select>
+
+      <h6>Go to a Community Board</h6>
+      <select class='go-to-cb'></select>
     </div>
     <div id='map'></div>
   </div>
   <script src="assets/vendor/js/cartodb.js"></script>
+  <script src="assets/vendor/js/async.js"></script>
   <script src="assets/js/carto.js"></script>
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
