@@ -17,7 +17,7 @@ app.map = (function(w, d, L, $) {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       });
 
-    map = new L.Map('map', { 
+    map = new L.Map('map', {
       center: [40.694045, -73.946571],
       zoom: 12
     });
@@ -34,33 +34,35 @@ app.map = (function(w, d, L, $) {
     // grab cartocss object
     carto = app.cartocss;
 
-    // for use with CartoDB's 'Named Maps API', loads data but
-    // currently doesn't work with toggling the sublayers
+    // for use with CartoDB's 'Named Maps API', loads the data but
+    // currently doesn't work with toggling the sublayers...
     var layerSource = {
       user_name: 'anhdnyc',
       type: 'namedmap',
       named_map: {
-        name: 'samp_test',
+        name: 'samp_test3',
         layers: [
           {
-            layer_name: "samp_select_mapluto",
-            interactivity: 'cartodb_id, address, bbl'
+            layer_name: "all",
+            // interactivity: 'cartodb_id, address, bbl, est2011'
           },
           {
-            layer_name: "nycc"
+            layer_name: "cc"
           },
           {
-            layer_name: "nycd"
+            layer_name: "cb"
           },
           {
-            layer_name: "samp_select_mapluto_jc",
-            interactivity: 'cartodb_id, address, bbl, a1, a2, a3, nb, yearbuilt'
+            layer_name: "jobs",
+            // interactivity: 'cartodb_id, address, bbl, a1, a2, a3, nb, yearbuilt'
           }
         ]
       }
     };
-    
-    cartodb.createLayer(map, vizJSON)
+
+    // you can switch how the cartodb layers are added below by passing either
+    // layerSource or vizJSON as the second parameter to cartodb.createLayer()
+    cartodb.createLayer(map, layerSource)
       .addTo(map)
       .done(function(layer) {
 
@@ -73,14 +75,31 @@ app.map = (function(w, d, L, $) {
         }
 
         /* when using the layerSource object, create infowindows like so: */
-        // cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['cartodb_id', 'address','bbl']);
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['cartodb_id', 'address', 'bbl', 'est2011']);
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["cartodb_id", "address", "bbl", "jobcount", "a1", "a2", "a3", "nb", "unitsres", "yearbuilt"]);
 
-        mapLayers[0].show(); // default data 
+        // very sloppy example tooltip creation
+        // todo: make a separate function for these and use a templating engine like handlebars
+        var testTooltip = layer.leafletMap.viz.addOverlay({
+          type: 'tooltip',
+          layer: layer.getSubLayer(0),
+          template: '<div class="cartodb-tooltip-content-wrapper"><div class="cartodb-tooltip-content"><h4>address</h4><p>{{address}}</p><h4>bbl</h4><p>{{bbl}}</p></div></div>',
+          width: 200,
+          position: 'bottom|right',
+          fields: [{ address: 'address', bbl: 'bbl' }]
+        });
+        $('.cartodb-map.leaflet-container').append(testTooltip.render().el);
+
+        mapLayers[0].show(); // default data
         mapLayers[1].hide(); // community board boundaries
         mapLayers[1].setInteraction(false);
         mapLayers[2].hide(); // city council districts
         mapLayers[2].setInteraction(false);
         mapLayers[3].hide(); // dob jobs
+
+        // using the layerSource you can alter a "placeholder"
+        // value from the template like so:
+        // layer.setParams({ cc_sql: 30 });
 
       })
       .error(function(error) {
@@ -110,15 +129,15 @@ app.map = (function(w, d, L, $) {
           mapLayers[0].show();
           mapLayers[3].hide();
         }
-        
+
         return true;
       },
       rent: function() {
-        // hide show the change in RS layer
+        // todo: hide show the change in RS layer
         return true;
       },
       combined: function() {
-        // hide show the combined alert score
+        // todo: hide show the combined alert score
         return true;
       },
       cd: function() {
@@ -133,7 +152,6 @@ app.map = (function(w, d, L, $) {
       cb: function() {
         // hide / show community boards
         if (mapLayers[2].isVisible()) {
-          debugger;
           mapLayers[2].hide();
           $('.go-to-cc :nth-child(1)').prop('selected', true);
         }
@@ -151,17 +169,18 @@ app.map = (function(w, d, L, $) {
   }
 
   function createSelect() {
-
+    // sets up the select / dropdowns for community boards
+    // and council districts
     function createOptions(arr, name) {
       var toReturn = '';
-      var first = name === 'coundist' ? '<option val="">Select a Council District</option>' :
-        '<option val="">Select a Community Board</option>';
+      var first = name === 'coundist' ? '<option val="0">Select a Council District</option>' :
+        '<option val="0">Select a Community Board</option>';
       var geoName = name === 'coundist' ? 'Council District ' : 'Community Board ';
-      
+
       toReturn += first;
-      
+
       toReturn += arr.map(function(el){
-        return '<option value="' + el[name] + '">' + 
+        return '<option value="' + el[name] + '">' +
           geoName + el[name] + '</option>';
       }).join('');
 
@@ -207,22 +226,29 @@ app.map = (function(w, d, L, $) {
   }
 
   function getCC(num) {
-    // to set the map position to a certain cc or cb
-    sql.getBounds('SELECT * FROM nycc WHERE coundist = {{id}}', { id: num })
-      .done(function(data){
-        mapLayers[1].hide();
-        mapLayers[2].show();
-        map.fitBounds(data);
-      });
+    // to set the map position to a city council district
+    // zero means the first option in the select
+    if (num !== 0) {
+      sql.getBounds('SELECT * FROM nycc WHERE coundist = {{id}}', { id: num })
+        .done(function(data){
+          mapLayers[1].hide();
+          mapLayers[2].show();
+          map.fitBounds(data);
+        });
+    }
   }
 
   function getCB(num) {
-    sql.getBounds('SELECT * FROM nycd WHERE borocd = {{id}}', { id: num })
-      .done(function(data){
-        mapLayers[2].hide();
-        mapLayers[1].show();
-        map.fitBounds(data);
-      });
+    // to set the map position to a community board
+    // zero means the first option in the select
+    if (num !==0) {
+      sql.getBounds('SELECT * FROM nycd WHERE borocd = {{id}}', { id: num })
+        .done(function(data){
+          mapLayers[2].hide();
+          mapLayers[1].show();
+          map.fitBounds(data);
+        });
+    }
   }
 
   function init(){
