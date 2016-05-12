@@ -1,32 +1,46 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <title>SAMP Demo</title>
   <meta charset="utf-8"/>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" type="text/css" href="assets/vendor/css/normalize.css">
   <link rel="stylesheet" type="text/css" href="assets/vendor/css/cartodb.css" />
   <link rel="stylesheet" type="text/css" href="assets/vendor/css/skeleton.css">
   <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
 </head>
 <body>
   <div class='container'>
     <div class='ui map-layers top right'>
       <h5>Map Layers</h5>
-      <button id='score' data="0">speculation score</button>
-      <button id='dob' data="3">DOB permits</button>
-      <button id='rent'>change rent-regulated</button>
-      <button id='combined'>Combined Score</button>
-      <button id='cd' data="2">Council Districts</button>
-      <button id='cb' data="1">Community Boards</button>
+      <button id='score' data="0" class="radio1 selected">speculation score</button>
+      <button id='dob' data="3" class="radio1">DOB permits</button>
+      <button id='rent' class="radio1">change rent-regulated</button>
+      <button id='combined' class="radio1">Combined Score</button>
+      <button id='cd' data="2" class="radio2">Council Districts</button>
+      <button id='cb' data="1" class="radio2">Community Boards</button>
 
       <hr>
 
       <!-- to do: add selects for filtering by CC or CB -->
-      <h6>Go to a City Council District</h6>
-      <select class='go-to-cc'></select>
+      <label for="cc-dist-select">Go to a City Council District</label>
+      <select id="cc-dist-select" class='go-to-cc'></select>
 
-      <h6>Go to a Community Board</h6>
-      <select class='go-to-cb'></select>
+      <label for="cb-dist-select">Go to a Community Board</label>
+      <select id="cb-dist-select" class='go-to-cb'></select>
     </div>
     <div id='map'></div>
   </div>

@@ -112,31 +112,37 @@ app.map = (function(w, d, L, $) {
     layerToggle = {
       // hide / show the default map layer (speculation score)
       score : function() {
+        console.log('score');
         if (mapLayers[0].isVisible()) {
           mapLayers[0].hide();
         } else {
+          hideAllLayers();
           mapLayers[0].show();
         }
 
         return true;
       },
       dob: function() {
+        console.log('dob');
         // hide show the dob jobs layer
-        if (!mapLayers[3].isVisible()) {
-          mapLayers[0].hide();
-          mapLayers[3].show();
-        } else {
-          mapLayers[0].show();
+        if (mapLayers[3].isVisible()) {
           mapLayers[3].hide();
+        } else {
+          hideAllLayers();
+          mapLayers[3].show();
         }
 
         return true;
       },
       rent: function() {
+        console.log('rent');
+        hideAllLayers();
         // todo: hide show the change in RS layer
         return true;
       },
       combined: function() {
+        console.log('combined');
+        hideAllLayers();
         // todo: hide show the combined alert score
         return true;
       },
@@ -160,9 +166,20 @@ app.map = (function(w, d, L, $) {
       }
     }
 
-    $('.map-layers button').click(function(e) {
+    function hideAllLayers() {
+      mapLayers[0].hide();
+      mapLayers[3].hide();
+    }
+
+    $('.radio1').click(function(e) {
       e.preventDefault();
-      $('.map-layers .button').removeClass('selected');
+      $('.radio1').removeClass('selected');
+      $(this).addClass('selected');
+      layerToggle[$(this).attr('id')]();
+    });
+    $('.radio2').click(function(e) {
+      e.preventDefault();
+      $('.radio2').removeClass('selected');
       $(this).addClass('selected');
       layerToggle[$(this).attr('id')]();
     });
