@@ -45,3 +45,51 @@ html, body {
   background-color: rgb(255,255,255);
   text-align: left;
 }
+
+.selected {
+  color: #333;
+  border-color: #888;
+  outline: 0;
+  background-color: #ccc;
+}
+
+/* Infowindow Style Overrides */
+div.cartodb-popup h1,
+div.cartodb-popup h2,
+div.cartodb-popup h3,
+div.cartodb-popup h4,
+div.cartodb-popup h5,
+div.cartodb-popup h6 {
+  font-weight: 300;
+  font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+  color:#888888;
+}
+
+div.cartodb-popup p {
+  color:#222;
+  font-weight: 400;
+  font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+}
+
+.cartodb-popup-header {
+  margin-bottom: 5px;
+}
+
+/* Infowindow hover style */
+div.cartodb-tooltip-content h1,
+div.cartodb-tooltip-content h2,
+div.cartodb-tooltip-content h3,
+div.cartodb-tooltip-content h4,
+div.cartodb-tooltip-content h5,
+div.cartodb-tooltip-content h6 {
+  font-weight: 300;
+  font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+  color:#888888;  
+}
+
+div.cartodb-tooltip-content p {
+  color:#222;
+  font-weight: 400;
+  font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+}
+
