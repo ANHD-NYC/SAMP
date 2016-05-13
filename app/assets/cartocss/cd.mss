@@ -9,7 +9,7 @@
 
 #nycc::labels {
   text-name: [coundist];
-  text-face-name: 'DejaVu Sans Bold';
+  text-face-name: 'Raleway';
   text-size: 14;
   text-label-position-tolerance: 0;
   text-fill: #5CA2D1;

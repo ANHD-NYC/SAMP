@@ -21,6 +21,109 @@
   <link rel="stylesheet" type="text/css" href="assets/vendor/css/skeleton.css">
   <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
+  <!-- Custon CartoDB Infowindow Templates
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script type="infowindow/html" id="spec_score_infowindow">
+    <div class="cartodb-popup v2">
+      <a href="#close" class="cartodb-popup-close-button close">x</a>
+       <div class="cartodb-popup-content-wrapper">
+         <div class="cartodb-popup-header">
+           <h2>{{content.data.address}}</h2>
+         </div>
+         {{#content.data.bbl}}
+         <div class="cartodb-popup-content">
+           <h3>Building Block Lot (BBL): </h3>
+           <p>{{content.data.bbl}}</p>
+         </div>
+         {{/content.data.bbl}}
+         {{#content.data.ownername}}
+         <div class="cartodb-popup-content">
+           <h3>Owner Name: </h3>
+           <p>{{content.data.ownername}}</p>
+         </div>
+         {{/content.data.ownername}}
+         {{#content.data.saleprice}}
+         <div class="cartodb-popup-content">
+           <h3>Sale Price: </h3>
+           <p id="salePrice">${{content.data.saleprice}}</p>
+         </div>
+         {{/content.data.saleprice}}
+         {{#content.data.saledate}}
+         <div class="cartodb-popup-content">
+           <h3>Sale Date: </h3>
+           <p>{{content.data.saledate}}</p>
+         </div>
+         {{/content.data.saledate}}
+         {{#content.data.unitsres}}
+         <div class="cartodb-popup-content">
+           <h3>Number of Residential Units: </h3>
+           <p id="unitsRes">{{content.data.unitsres}}</p>
+         </div>
+         {{/content.data.unitsres}}
+       </div>
+       <div class="cartodb-popup-tip-container"></div>
+    </div>
+  </script>
+  <script type="infowindow/html" id="dob_infowindow">
+    <div class="cartodb-popup v2">
+      <a href="#close" class="cartodb-popup-close-button close">x</a>
+       <div class="cartodb-popup-content-wrapper">
+         <div class="cartodb-popup-header">
+           <h2>{{content.data.address}}</h2>
+         </div>
+         {{#content.data.bbl}}
+         <div class="cartodb-popup-content">
+           <h3>Building Block Lot (BBL): </h3>
+           <p>{{content.data.bbl}}</p>
+         </div>
+         {{/content.data.bbl}}
+         {{#content.data.jobcount}}
+         <div class="cartodb-popup-content">
+           <h3>Job Count: </h3>
+           <p>{{content.data.jobcount}}</p>
+         </div>
+         {{/content.data.jobcount}}
+         {{#content.data.a1}}
+         <div class="cartodb-popup-content">
+           <h3>A1: </h3>
+           <p>{{content.data.a1}}</p>
+         </div>
+         {{/content.data.a1}}
+         {{#content.data.a2}}
+         <div class="cartodb-popup-content">
+           <h3>A2: </h3>
+           <p>{{content.data.a2}}</p>
+         </div>
+         {{/content.data.a2}}
+         {{#content.data.a3}}
+         <div class="cartodb-popup-content">
+           <h3>A3: </h3>
+           <p>{{content.data.a3}}</p>
+         </div>
+         {{/content.data.a3}}
+         {{#content.data.nb}}
+         <div class="cartodb-popup-content">
+           <h3>NB: </h3>
+           <p>{{content.data.nb}}</p>
+         </div>
+         {{/content.data.nb}}
+         {{#content.data.unitsres}}
+         <div class="cartodb-popup-content">
+           <h3>Number of Residential Units: </h3>
+           <p id="unitsRes">{{content.data.unitsres}}</p>
+         </div>
+         {{/content.data.unitsres}}
+         {{#content.data.yearbuilt}}
+         <div class="cartodb-popup-content">
+           <h3>Year Built: </h3>
+           <p>{{content.data.yearbuilt}}</p>
+         </div>
+         {{/content.data.yearbuilt}}
+       </div>
+       <div class="cartodb-popup-tip-container"></div>
+    </div>
+  </script>
+
 </head>
 <body>
   <div class='container'>
@@ -50,5 +153,6 @@
   <script type="text/javascript">
     $(document).ready(app.map.init);
   </script>
+
 </body>
 </html>

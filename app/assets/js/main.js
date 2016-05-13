@@ -75,15 +75,16 @@ app.map = (function(w, d, L, $) {
         }
 
         /* when using the layerSource object, create infowindows like so: */
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['cartodb_id', 'address', 'bbl', 'est2011']);
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["cartodb_id", "address", "bbl", "jobcount", "a1", "a2", "a3", "nb", "unitsres", "yearbuilt"]);
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['address', 'bbl', 'est2011', 'est2014', 'ownername', 'saleprice', 'saledate', 'unitsres'], {infowindowTemplate: $('#spec_score_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["address", "bbl", "jobcount", "a1", "a2", "a3", "nb", "unitsres", "yearbuilt"], {infowindowTemplate: $('#dob_infowindow').html()});
+
 
         // very sloppy example tooltip creation
         // todo: make a separate function for these and use a templating engine like handlebars
         var testTooltip = layer.leafletMap.viz.addOverlay({
           type: 'tooltip',
           layer: layer.getSubLayer(0),
-          template: '<div class="cartodb-tooltip-content-wrapper"><div class="cartodb-tooltip-content"><h4>address</h4><p>{{address}}</p><h4>bbl</h4><p>{{bbl}}</p></div></div>',
+          template: '<div class="cartodb-tooltip-content-wrapper"><div class="cartodb-tooltip-content"><h4>Address</h4><p>{{address}}</p><h4>Building Block Lot (BBL):</h4><p>{{bbl}}</p></div></div>',
           width: 200,
           position: 'bottom|right',
           fields: [{ address: 'address', bbl: 'bbl' }]
@@ -100,6 +101,16 @@ app.map = (function(w, d, L, $) {
         // using the layerSource you can alter a "placeholder"
         // value from the template like so:
         // layer.setParams({ cc_sql: 30 });
+
+        // listen for opening of popups to fomat numbers
+        mapLayers[0].on('featureClick', function(e, latlng, pos, data, layer) {
+          $('#salePrice').text(numberWithCommas($('#salePrice').text()));
+          $('#unitsRes').text(numberWithCommas($('#unitsRes').text()));
+        });
+
+        mapLayers[3].on('featureClick', function(e, latlng, pos, data, layer) {
+          $('#unitsRes').text(numberWithCommas($('#unitsRes').text()));
+        });
 
       })
       .error(function(error) {
@@ -150,7 +161,7 @@ app.map = (function(w, d, L, $) {
         // hide / show council districts
         if (mapLayers[1].isVisible()) {
           mapLayers[1].hide();
-          $('.go-to-cb :nth-child(1)').prop('selected', true);
+          $('.go-to-cb :nth-child(1)').prop('selected', true);          
         }
         mapLayers[2].toggle();
         return true;
@@ -173,15 +184,24 @@ app.map = (function(w, d, L, $) {
 
     $('.radio1').click(function(e) {
       e.preventDefault();
-      $('.radio1').removeClass('selected');
-      $(this).addClass('selected');
       layerToggle[$(this).attr('id')]();
+      if (!$(this).hasClass("selected")) {
+        $('.radio1').removeClass('selected');
+        $(this).addClass('selected');
+      } else {
+        $(this).removeClass('selected');
+      }
     });
     $('.radio2').click(function(e) {
       e.preventDefault();
-      $('.radio2').removeClass('selected');
-      $(this).addClass('selected');
       layerToggle[$(this).attr('id')]();
+      if (!$(this).hasClass("selected")) {
+        $('.radio2').removeClass('selected');
+        $(this).addClass('selected');
+      } else {
+        $(this).removeClass('selected');
+      }
+
     });
   }
 
@@ -230,12 +250,16 @@ app.map = (function(w, d, L, $) {
         // set the other select to first option
         $('.go-to-cb :nth-child(1)').prop('selected', true);
         getCC($(this).val());
+        $('.radio2').removeClass('selected');
+        $('#cd').addClass('selected');
       });
 
       $('.go-to-cb').on('change', function(e){
         // set the other select to first option
         $('.go-to-cc :nth-child(1)').prop('selected', true);
         getCB($(this).val());
+        $('.radio2').removeClass('selected');
+        $('#cb').addClass('selected');
       });
     }
 
@@ -266,6 +290,10 @@ app.map = (function(w, d, L, $) {
           map.fitBounds(data);
         });
     }
+  }
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   function init(){
