@@ -88,8 +88,24 @@ div.cartodb-tooltip-content h6 {
 }
 
 div.cartodb-tooltip-content p {
-  color:#222;
+  color:#222;  
   font-weight: 400;
   font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+}
+
+.true {
+  font-weight: 300;
+  font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+  text-align: center;
+  color: #fff;
+  background-color: #BD0026;
+}
+
+.false {
+  font-weight: 300;
+  font-family: "Raleway", "Helvetica Neue", "Helvetica", Arial;
+  text-align: center;
+  color: #fff;
+  background-color: #39B000;
 }
 
