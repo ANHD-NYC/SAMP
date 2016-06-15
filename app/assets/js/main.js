@@ -30,7 +30,7 @@ app.map = (function(w, d, L, $) {
 
   function createCDBLayer() {
     // adds the CartoDB overlay from the viz.json URL
-    vizJSON = 'https://anhdnyc.cartodb.com/api/v2/viz/d7c7286a-f50f-11e5-8c19-0ecfd53eb7d3/viz.json';
+    vizJSON = 'https://anhdnyc.cartodb.com/api/v2/viz/5dc8e250-31ab-11e6-a738-0ecfd53eb7d3/viz.json';
     // grab cartocss object
     carto = app.cartocss;
 
@@ -40,21 +40,25 @@ app.map = (function(w, d, L, $) {
       user_name: 'anhdnyc',
       type: 'namedmap',
       named_map: {
-        name: 'samp_test3',
+        name: 'SAMP_Map_2016',
         layers: [
           {
-            layer_name: "all",
-            // interactivity: 'cartodb_id, address, bbl, est2011'
+            layer_name: "sampscore",
           },
           {
-            layer_name: "cc"
+            layer_name: "rentregscore"
           },
           {
-            layer_name: "cb"
+            layer_name: "dobscore"
           },
           {
-            layer_name: "jobs",
-            // interactivity: 'cartodb_id, address, bbl, a1, a2, a3, nb, yearbuilt'
+            layer_name: "dofscore",
+          },
+          {
+            layer_name: "cb",
+          },
+          {
+            layer_name: "cd",
           }
         ]
       }
@@ -75,28 +79,33 @@ app.map = (function(w, d, L, $) {
         }
 
         /* when using the layerSource object, create infowindows like so: */
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),['address', 'bbl', 'est2011', 'est2014', 'ownername', 'saleprice', 'saledate', 'unitsres'], {infowindowTemplate: $('#spec_score_infowindow').html()});
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["address", "bbl", "jobcount", "a1", "a2", "a3", "nb", "unitsres", "yearbuilt"], {infowindowTemplate: $('#dob_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),["sampscore", "address", "dofscore", "dobscore", "rentregscore", "dobyn", "rentregyn", "props"], {infowindowTemplate: $('#sampscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(1),["rentregscore", "address", "uc2014", "rentstabdiff", "rentstabpctchange", "dobyn", "props"], {infowindowTemplate: $('#rentregscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(2),["dobscore", "address", "jobcount", "a1", "a2", "dm", "props", "rentregyn"], {infowindowTemplate: $('#dobscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["dofscore", "address", "saledate", "saleprice", "priceresunit", "ppunit10_plutoresdunits", "pctchngunit_10_15", "dobyn", "rentregyn"], {infowindowTemplate: $('#dofscore_infowindow').html()});
 
 
         // very sloppy example tooltip creation
         // todo: make a separate function for these and use a templating engine like handlebars
-        var testTooltip = layer.leafletMap.viz.addOverlay({
+/*        var testTooltip = layer.leafletMap.viz.addOverlay({
           type: 'tooltip',
           layer: layer.getSubLayer(0),
-          template: '<div class="cartodb-tooltip-content-wrapper"><div class="cartodb-tooltip-content"><h4>Address</h4><p>{{address}}</p><h4>Building Block Lot (BBL):</h4><p>{{bbl}}</p></div></div>',
+          template: '<div class="cartodb-tooltip-content-wrapper"><div class="cartodb-tooltip-content"><h4>Address</h4><p>{{address}}</p></div></div>',
           width: 200,
           position: 'bottom|right',
-          fields: [{ address: 'address', bbl: 'bbl' }]
+          fields: [{ address: 'address' }]
         });
-        $('.cartodb-map.leaflet-container').append(testTooltip.render().el);
+        $('.cartodb-map.leaflet-container').append(testTooltip.render().el);*/
 
-        mapLayers[0].show(); // default data
-        mapLayers[1].hide(); // community board boundaries
-        mapLayers[1].setInteraction(false);
-        mapLayers[2].hide(); // city council districts
-        mapLayers[2].setInteraction(false);
-        mapLayers[3].hide(); // dob jobs
+        mapLayers[0].show(); // sampscore layer
+        mapLayers[1].hide(); // rentregscore
+        mapLayers[2].hide(); // dobscore
+        mapLayers[3].hide(); // dofscore
+
+        mapLayers[4].hide(); // community districts
+        mapLayers[4].setInteraction(false);
+        mapLayers[5].hide(); // city council districts
+        mapLayers[5].setInteraction(false);
 
         // using the layerSource you can alter a "placeholder"
         // value from the template like so:
@@ -104,12 +113,17 @@ app.map = (function(w, d, L, $) {
 
         // listen for opening of popups to fomat numbers
         mapLayers[0].on('featureClick', function(e, latlng, pos, data, layer) {
-          $('#salePrice').text(numberWithCommas($('#salePrice').text()));
-          $('#unitsRes').text(numberWithCommas($('#unitsRes').text()));
+
+        });
+        mapLayers[1].on('featureClick', function(e, latlng, pos, data, layer) {
+          $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
         });
 
         mapLayers[3].on('featureClick', function(e, latlng, pos, data, layer) {
-          $('#unitsRes').text(numberWithCommas($('#unitsRes').text()));
+          $('#saleprice').text("$" + numberWithCommas(parseInt($('#saleprice').text())));
+          $('#priceresunit').text("$" + numberWithCommas(parseInt($('#priceresunit').text())));
+          $('#ppunit10_plutoresdunits').text("$" + numberWithCommas(parseInt($('#ppunit10_plutoresdunits').text())));
+          $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
         });
 
       })
@@ -122,8 +136,7 @@ app.map = (function(w, d, L, $) {
     // wires the UI map layer buttons to CartoDB
     layerToggle = {
       // hide / show the default map layer (speculation score)
-      score : function() {
-        console.log('score');
+      sampscore: function() {
         if (mapLayers[0].isVisible()) {
           mapLayers[0].hide();
         } else {
@@ -133,9 +146,27 @@ app.map = (function(w, d, L, $) {
 
         return true;
       },
-      dob: function() {
-        console.log('dob');
-        // hide show the dob jobs layer
+      rentregscore: function() {
+        if (mapLayers[1].isVisible()) {
+          mapLayers[1].hide();
+        } else {
+          hideAllLayers();
+          mapLayers[1].show();
+        }
+
+        return true;
+      },
+      dobscore: function() {
+        if (mapLayers[2].isVisible()) {
+          mapLayers[2].hide();
+        } else {
+          hideAllLayers();
+          mapLayers[2].show();
+        }
+
+        return true;
+      },
+      dofscore: function() {
         if (mapLayers[3].isVisible()) {
           mapLayers[3].hide();
         } else {
@@ -145,40 +176,38 @@ app.map = (function(w, d, L, $) {
 
         return true;
       },
-      rent: function() {
-        console.log('rent');
-        hideAllLayers();
-        // todo: hide show the change in RS layer
-        return true;
-      },
-      combined: function() {
-        console.log('combined');
-        hideAllLayers();
-        // todo: hide show the combined alert score
-        return true;
-      },
       cd: function() {
         // hide / show council districts
-        if (mapLayers[1].isVisible()) {
-          mapLayers[1].hide();
+        if (mapLayers[4].isVisible()) {
+          mapLayers[4].hide();
           $('.go-to-cb :nth-child(1)').prop('selected', true);          
         }
-        mapLayers[2].toggle();
+        if (mapLayers[5].isVisible()) {
+          mapLayers[5].hide();
+        } else {
+          mapLayers[5].show();
+        }
         return true;
       },
       cb: function() {
         // hide / show community boards
-        if (mapLayers[2].isVisible()) {
-          mapLayers[2].hide();
+        if (mapLayers[5].isVisible()) {
+          mapLayers[5].hide();
           $('.go-to-cc :nth-child(1)').prop('selected', true);
         }
-        mapLayers[1].toggle();
+        if (mapLayers[4].isVisible()) {
+          mapLayers[4].hide();
+        } else {
+          mapLayers[4].show();
+        }
         return true;
       }
     }
 
     function hideAllLayers() {
       mapLayers[0].hide();
+      mapLayers[1].hide();
+      mapLayers[2].hide();
       mapLayers[3].hide();
     }
 
