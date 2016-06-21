@@ -13,7 +13,7 @@ app.map = (function(w, d, L, $) {
 
   function initMap() {
     // initiates the Leaflet map
-    basemapLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    basemapLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       });
 
@@ -69,7 +69,7 @@ app.map = (function(w, d, L, $) {
 
     // you can switch how the cartodb layers are added below by passing either
     // layerSource or vizJSON as the second parameter to cartodb.createLayer()
-    cartodb.createLayer(map, layerSource)
+    cartodb.createLayer(map, layerSource, {'https': true})
       .addTo(map)
       .done(function(layer) {
 
