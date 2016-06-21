@@ -19,8 +19,11 @@ app.map = (function(w, d, L, $) {
 
     map = new L.Map('map', {
       center: [40.694045, -73.946571],
-      zoom: 12
+      zoom: 12,
+      zoomControl: false,
     });
+
+    new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 
     map.addLayer(basemapLayer);
 
@@ -112,9 +115,6 @@ app.map = (function(w, d, L, $) {
         // layer.setParams({ cc_sql: 30 });
 
         // listen for opening of popups to fomat numbers
-        mapLayers[0].on('featureClick', function(e, latlng, pos, data, layer) {
-
-        });
         mapLayers[1].on('featureClick', function(e, latlng, pos, data, layer) {
           $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
         });
@@ -142,6 +142,8 @@ app.map = (function(w, d, L, $) {
         } else {
           hideAllLayers();
           mapLayers[0].show();
+          // set max legend value to 300
+          $('#maxLegendNumber').text(300);
         }
 
         return true;
@@ -152,6 +154,8 @@ app.map = (function(w, d, L, $) {
         } else {
           hideAllLayers();
           mapLayers[1].show();
+          // set max legend value to 100
+          $('#maxLegendNumber').text(100);
         }
 
         return true;
@@ -162,6 +166,8 @@ app.map = (function(w, d, L, $) {
         } else {
           hideAllLayers();
           mapLayers[2].show();
+          // set max legend value to 100
+          $('#maxLegendNumber').text(100);
         }
 
         return true;
@@ -172,6 +178,8 @@ app.map = (function(w, d, L, $) {
         } else {
           hideAllLayers();
           mapLayers[3].show();
+          // set max legend value to 100
+          $('#maxLegendNumber').text(100);
         }
 
         return true;
@@ -223,6 +231,7 @@ app.map = (function(w, d, L, $) {
     });
     $('.radio2').click(function(e) {
       e.preventDefault();
+      console.log($(this).attr('id'));
       layerToggle[$(this).attr('id')]();
       if (!$(this).hasClass("selected")) {
         $('.radio2').removeClass('selected');
@@ -301,8 +310,8 @@ app.map = (function(w, d, L, $) {
     if (num !== 0) {
       sql.getBounds('SELECT * FROM nycc WHERE coundist = {{id}}', { id: num })
         .done(function(data){
-          mapLayers[1].hide();
-          mapLayers[2].show();
+          mapLayers[4].hide();
+          mapLayers[5].show();
           map.fitBounds(data);
         });
     }
@@ -314,11 +323,19 @@ app.map = (function(w, d, L, $) {
     if (num !==0) {
       sql.getBounds('SELECT * FROM nycd WHERE borocd = {{id}}', { id: num })
         .done(function(data){
-          mapLayers[2].hide();
-          mapLayers[1].show();
+          mapLayers[5].hide();
+          mapLayers[4].show();
           map.fitBounds(data);
         });
     }
+  }
+
+  function setupToggleListener() {
+    // toggle closed class when hamburger is clicked
+    $('#hamburger').on( "click", function() {
+      $('#map-layers').toggleClass('hideMapLayers');
+    });
+
   }
 
   function numberWithCommas(x) {
@@ -330,6 +347,7 @@ app.map = (function(w, d, L, $) {
     createCDBLayer();
     wireLayerBtns();
     createSelect();
+    setupToggleListener();
   }
 
   return {
