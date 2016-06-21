@@ -3,16 +3,17 @@
 <head>
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <title>SAMP Demo</title>
+  <title>Speculation Alert Mapping Project | ANHD</title>
   <meta charset="utf-8"/>
   <meta name="description" content="">
   <meta name="author" content="">
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- FONT
+  <!-- FONT 
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+  <script src="https://use.fontawesome.com/79e3583a1d.js"></script>
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -21,7 +22,7 @@
   <link rel="stylesheet" type="text/css" href="assets/vendor/css/skeleton.css">
   <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
-  <!-- Custon CartoDB Infowindow Templates
+  <!-- Custom CartoDB Infowindow Templates
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script type="infowindow/html" id="sampscore_infowindow">
     <div class="cartodb-popup v2">
@@ -221,7 +222,13 @@
 </head>
 <body>
   <div class='container'>
-    <div class='ui map-layers top right'>
+    <div id='logo' class='logo top left hideLogo'>
+      <img class='logoImg' src='assets/images/anhd_logo.jpg'/>
+    </div>
+    <div id='hamburger' class='hamburger top right hideHamburger'>
+      <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+    </div>
+    <div id='map-layers' class='ui map-layers top right hideMapLayers'>
       <h5>Map Layers</h5>
       <button id='sampscore' data="0" class="radio1 selected">Combined Risk Score</button>
       <button id='rentregscore' data="1" class="radio1">Loss of Rent Reg. Risk</button>
@@ -230,13 +237,30 @@
       <hr />
       <button id='cd' data="5" class="radio2">Council Districts</button>
       <button id='cb' data="4" class="radio2">Community Boards</button>
-      <hr>
+      <hr />
       <!-- to do: add selects for filtering by CC or CB -->
       <label for="cc-dist-select">Go to a City Council District</label>
       <select id="cc-dist-select" class='go-to-cc'></select>
 
       <label for="cb-dist-select">Go to a Community Board</label>
       <select id="cb-dist-select" class='go-to-cb'></select>
+    </div>
+    <div class='ui map-legend bottom right'>
+      <div class="legend-cloropleth">
+          <ul>
+              <li class="min">0</li>
+              <li id="maxLegendNumber" class="max">300</li>
+              <li class="graph">
+                  <div class="colors">
+                      <div class="quartile" style="background-color:#FFFFB2"></div>
+                      <div class="quartile" style="background-color:#FECC5C"></div>
+                      <div class="quartile" style="background-color:#FD8D3C"></div>
+                      <div class="quartile" style="background-color:#F03B20"></div>
+                      <div class="quartile" style="background-color:#BD0026"></div>
+                  </div>
+              </li>
+          </ul>
+      </div>
     </div>
     <div id='map'></div>
   </div>

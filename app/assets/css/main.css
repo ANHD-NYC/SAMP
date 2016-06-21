@@ -21,11 +21,11 @@ html, body {
 }
 
 .top {
-  top: 25px;
+  top: 10px;
 }
 
 .left {
-  left: 25px;
+  left: 10px;
 }
 
 .bottom {
@@ -33,18 +33,60 @@ html, body {
 }
 
 .right {
-  right: 25px;
+  right: 10px;
 }
 
 .ui {
-  width: 250px;
+  width: 215px;
   height: auto;
-  padding: 15px;
+  padding: 10px 15px 5px 15px;
   position: absolute;
   z-index: 999;
   background-color: rgb(255,255,255);
-  text-align: left;
+  text-align: center;
+  border-radius: 4px;
 }
+
+.hamburger {
+  width: auto;
+  height: auto;
+  padding: 2px 5px 0px 5px;
+  position: absolute;
+  z-index: 1000;
+  background-color: rgb(255,255,255);
+  text-align: center;
+  border-radius: 4px;  
+  cursor: pointer;
+}
+
+.logo {
+  width: auto;
+  height: auto;
+  padding: 7px 7px 0px 7px;
+  position: absolute;
+  z-index: 1000;
+  background-color: rgb(255,255,255);
+  text-align: center;
+  border-radius: 4px;  
+}
+
+.logoImg {
+  width: 96px;
+  height: 96px;  
+}
+
+.hideHamburger {
+  display: block;
+}
+
+.hideMapLayers {
+  display: none;
+}
+
+.hideLogo {
+  display: none;
+}
+
 
 .selected {
   color: #333;
@@ -74,6 +116,12 @@ div.cartodb-popup p {
 .cartodb-popup-header {
   margin-bottom: 5px;
 }
+
+/* CartoDb logo move to left */
+div.cartodb-logo {
+  left: 35px !important;
+}
+
 
 /* Infowindow hover style */
 div.cartodb-tooltip-content h1,
@@ -107,5 +155,113 @@ div.cartodb-tooltip-content p {
   text-align: center;
   color: #fff;
   background-color: #39B000;
+}
+
+
+/*
+* Legend CSS
+*/
+
+#legend {
+  margin-bottom: 10px;
+}
+
+.legend-cloropleth ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.legend-cloropleth ul li {
+  font-size: 12px;
+  line-height: 10px;
+}
+
+.legend-cloropleth li.min {
+  float: left;
+  margin: 0 0 5px;
+}
+
+.legend-cloropleth li.one {
+  float: left;
+  margin: 0 0 5px;
+}
+
+.legend-cloropleth li.max {
+  float: right;
+  margin: 0 0 5px;
+}
+
+
+.legend-cloropleth li.breaks {
+  clear: both;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+  height: 16px;
+}
+
+.legend-cloropleth li.breaks .numbers {
+  display: table-row;
+  width:100%;
+}
+
+.legend-cloropleth li.breaks .quartile {
+  display: table-cell;
+  width:1%;
+}
+
+.legend-cloropleth li.breaks div {
+  width: 10px;
+  height: 16px;
+}
+
+.legend-cloropleth li.graph {
+  clear: both;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+  height: 22px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding;
+  border: 1px solid #b3b3b3;
+}
+
+.legend-cloropleth li.graph.half {
+  width: 22.22%;
+}
+
+.legend-cloropleth li.graph .colors {
+  display: table-row;
+}
+
+.legend-cloropleth li.graph .quartile {
+  display: table-cell;
+}
+
+.legend-cloropleth li.graph div {
+  width: 10px;
+  height: 22px;
+}
+
+
+@media (min-width: 550px) {
+  .hideHamburger {
+    display: none;
+  }
+
+  .hideMapLayers {
+    display: block;
+  }
+
+  .hideLogo {
+    display: block;
+  }
 }
 
