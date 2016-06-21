@@ -27,6 +27,23 @@ app.map = (function(w, d, L, $) {
 
     map.addLayer(basemapLayer);
 
+    // add address geocoder
+    var geocoder = L.Control.geocoder({
+      position: 'bottomleft', 
+      collapsed: true, 
+      placeholder:'Address Search', 
+      defaultMarkGeocode: false, 
+      geocoder:new L.Control.Geocoder.Google()
+    })
+    .on('markgeocode', function(e) {
+      var bbox = e.geocode.bbox;
+      map.fitBounds(bbox);
+    })
+    .addTo(map);
+
+
+
+
     // set the cartodb sql object up
     sql = cartodb.SQL({ user: 'anhdnyc' });
   }
