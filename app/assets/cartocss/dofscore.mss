@@ -43,5 +43,7 @@
   polygon-opacity: 0.8;
 }
 #samp_plus_sold_regulated_a1_dm_merge_mapputo [ dofscore < 1] {
-   polygon-fill: #aaaaaa;
+  polygon-fill: #aaaaaa;
+  polygon-opacity: 0.4;
+
 }

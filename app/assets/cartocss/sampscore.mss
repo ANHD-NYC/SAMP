@@ -44,5 +44,5 @@
 }
 #samp_plus_sold_regulated_a1_dm_merge_mapputo [ sampscore < 1] {
   polygon-fill: #aaaaaa;
-  polygon-opacity: 0.8;
+  polygon-opacity: 0.4;
 }
