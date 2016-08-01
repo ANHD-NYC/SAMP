@@ -32,7 +32,7 @@ app.map = (function(w, d, L, $) {
       position: 'bottomleft', 
       collapsed: true, 
       placeholder:'Address Search', 
-      defaultMarkGeocode: false, 
+      defaultMarkGeocode: true, 
       geocoder:new L.Control.Geocoder.Google()
     })
     .on('markgeocode', function(e) {
