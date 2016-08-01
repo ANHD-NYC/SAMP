@@ -10,6 +10,9 @@
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- ANHD FAVICON
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="shortcut icon" href="http://anhd.org/wp-content/themes/sahifa/favicon.ico" title="Favicon" />  
   <!-- FONT 
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
@@ -32,31 +35,37 @@
          <div class="cartodb-popup-header">
            <h2>{{content.data.address}}</h2>
          </div>
+         {{#content.data.unitsres}}
+         <div class="cartodb-popup-content">
+           <h3>Number of Residential Units: <strong>{{content.data.unitsres}}</strong></h3>
+         </div>
+         {{/content.data.unitsres}}
+         {{#content.data.yearbuilt}}
+         <div class="cartodb-popup-content">
+           <h3>Year Built: <strong>{{content.data.yearbuilt}}</strong></h3>
+         </div>
+         {{/content.data.yearbuilt}}
          {{#content.data.sampscore}}
          <div class="cartodb-popup-content">
-           <h3>SAMP Score: </h3>
-           <p>{{content.data.sampscore}}</p>
+           <h3>SAMP Score: <strong>{{content.data.sampscore}}</strong></h3>
          </div>
          {{/content.data.sampscore}}
          {{#content.data.dofscore}}
          <div class="cartodb-popup-content">
-           <h3>DOF Score: </h3>
-           <p>{{content.data.dofscore}}</p>
+           <h3>DOF Score: <strong>{{content.data.dofscore}}</strong></h3>
          </div>
          {{/content.data.dofscore}}
          {{#content.data.dobscore}}
          <div class="cartodb-popup-content">
-           <h3>DOB Score: </h3>
-           <p>{{content.data.dobscore}}</p>
+           <h3>DOB Score: <strong>{{content.data.dobscore}}</strong></h3>
          </div>
          {{/content.data.dobscore}}
          {{#content.data.rentregscore}}
          <div class="cartodb-popup-content">
-           <h3>Rent Regulation Score: </h3>
-           <p>{{content.data.rentregscore}}</p>
+           <h3>Rent Regulation Score: <strong>{{content.data.rentregscore}}</strong></h3>
          </div>
-         {{/content.data.rentregscore}}        
-         <div class="cartodb-popup-content">
+         {{/content.data.rentregscore}}     
+         <div class="cartodb-popup-content marginTop10">
           <div class="container">
             <div class="row">
               <div class="one-third column {{content.data.dobyn}}">DOB</div>
@@ -77,31 +86,37 @@
          <div class="cartodb-popup-header">
            <h2>{{content.data.address}}</h2>
          </div>
+         {{#content.data.unitsres}}
+         <div class="cartodb-popup-content">
+           <h3>Number of Residential Units: <strong>{{content.data.unitsres}}</strong></h3>
+         </div>
+         {{/content.data.unitsres}}
+         {{#content.data.yearbuilt}}
+         <div class="cartodb-popup-content">
+           <h3>Year Built: <strong>{{content.data.yearbuilt}}</strong></h3>
+         </div>
+         {{/content.data.yearbuilt}}
          {{#content.data.rentregscore}}
          <div class="cartodb-popup-content">
-           <h3>Rent Regulation Score: </h3>
-           <p>{{content.data.rentregscore}}</p>
+           <h3>Rent Regulation Score: <strong>{{content.data.rentregscore}}</strong></h3>
          </div>
          {{/content.data.rentregscore}}
          {{#content.data.uc2014}}
          <div class="cartodb-popup-content">
-           <h3>Rent Stabalized Units (2014): </h3>
-           <p>{{content.data.uc2014}}</p>
+           <h3>Rent Reg. Units (2014): <strong>{{content.data.uc2014}}</strong></h3>
          </div>
          {{/content.data.uc2014}}
          {{#content.data.rentstabdiff}}
          <div class="cartodb-popup-content">
-           <h3>Rent Stabalized Units Lost Since 2007: </h3>
-           <p>{{content.data.rentstabdiff}}</p>
+           <h3>Rent Reg. Units Lost Since 2007: <strong>{{content.data.rentstabdiff}}</strong></h3>
          </div>
          {{/content.data.rentstabdiff}}
          {{#content.data.rentstabpctchange}}
          <div class="cartodb-popup-content">
-           <h3>Percent of Rent Stabalized Units Lost Since 2007: </h3>
-           <p id="pctchange">{{content.data.rentstabpctchange}}</p>
+           <h3>Percent of Rent Reg. Units Lost Since 2007: <strong><span id="pctchange">{{content.data.rentstabpctchange}}</span></strong></h3>
          </div>
          {{/content.data.rentstabpctchange}}        
-         <div class="cartodb-popup-content">
+         <div class="cartodb-popup-content marginTop10">
           <div class="container">
             <div class="row">
               <div class="one-half column {{content.data.dobyn}}">DOB</div>
@@ -120,37 +135,42 @@
          <div class="cartodb-popup-header">
            <h2>{{content.data.address}}</h2>
          </div>
+         {{#content.data.unitsres}}
+         <div class="cartodb-popup-content">
+           <h3>Number of Residential Units: <strong>{{content.data.unitsres}}</strong></h3>
+         </div>
+         {{/content.data.unitsres}}
+         {{#content.data.yearbuilt}}
+         <div class="cartodb-popup-content">
+           <h3>Year Built: <strong>{{content.data.yearbuilt}}</strong></h3>
+         </div>
+         {{/content.data.yearbuilt}}
          {{#content.data.dobscore}}
          <div class="cartodb-popup-content">
-           <h3>DOB Score: </h3>
-           <p>{{content.data.dobscore}}</p>
+           <h3>DOB Permits Score: <strong>{{content.data.dobscore}}</strong></h3>
          </div>
          {{/content.data.dobscore}}
          {{#content.data.jobcount}}
          <div class="cartodb-popup-content">
-           <h3>Number of Jobs Since 2015: </h3>
-           <p>{{content.data.jobcount}}</p>
+           <h3>Number of DOB Permits (2013-2015): <strong>{{content.data.jobcount}}</strong></h3>
          </div>
          {{/content.data.jobcount}}
          {{#content.data.a1}}
          <div class="cartodb-popup-content">
-           <h3>Number of A1 Jobs Since 2015: </h3>
-           <p>{{content.data.a1}}</p>
+           <h3>Number of A1 Permits: <strong>{{content.data.a1}}</strong></h3>
          </div>
          {{/content.data.a1}}
          {{#content.data.a2}}
          <div class="cartodb-popup-content">
-           <h3>Number of A2 Jobs Since 2015: </h3>
-           <p>{{content.data.a2}}</p>
+           <h3>Number of A2 Permits: <strong>{{content.data.a2}}</strong></h3>
          </div>
          {{/content.data.a2}}
          {{#content.data.dm}}
          <div class="cartodb-popup-content">
-           <h3>Number of Demolitions Since 2015: </h3>
-           <p>{{content.data.dm}}</p>
+           <h3>Number of Demolitions: <strong>{{content.data.dm}}</strong></h3>
          </div>
          {{/content.data.dm}}        
-         <div class="cartodb-popup-content">
+         <div class="cartodb-popup-content marginTop10">
           <div class="container">
             <div class="row">
               <div class="one-half column {{content.data.rentregyn}}">Rent Stabalized</div>
@@ -169,43 +189,47 @@
          <div class="cartodb-popup-header">
            <h2>{{content.data.address}}</h2>
          </div>
+         {{#content.data.unitsres}}
+         <div class="cartodb-popup-content">
+           <h3>Number of Residential Units: <strong>{{content.data.unitsres}}</strong></h3>
+         </div>
+         {{/content.data.unitsres}}
+         {{#content.data.yearbuilt}}
+         <div class="cartodb-popup-content">
+           <h3>Year Built: <strong>{{content.data.yearbuilt}}</strong></h3>
+         </div>
+         {{/content.data.yearbuilt}}
          {{#content.data.dofscore}}
          <div class="cartodb-popup-content">
-           <h3>DOF Score: </h3>
-           <p>{{content.data.dofscore}}</p>
+           <h3>Property Sale Score: <strong>{{content.data.dofscore}}</strong></h3>
          </div>
          {{/content.data.dofscore}}
          {{#content.data.saledate}}
          <div class="cartodb-popup-content">
-           <h3>Sale Date: </h3>
-           <p>{{content.data.saledate}}</p>
+           <h3>Sale Date: <strong>{{content.data.saledate}}</strong></h3>
          </div>
          {{/content.data.saledate}}
          {{#content.data.saleprice}}
          <div class="cartodb-popup-content">
-           <h3>Sale Price: </h3>
-           <p id="saleprice">{{content.data.saleprice}}</p>
+           <h3>Sale Price: <strong><span id="saleprice">{{content.data.saleprice}}</span></strong></h3>
          </div>
          {{/content.data.saleprice}}
          {{#content.data.priceresunit}}
          <div class="cartodb-popup-content">
-           <h3>Sale Price Per Residential Unit: </h3>
-           <p id="priceresunit">{{content.data.priceresunit}}</p>
+           <h3>Sale Price Per Residential Unit: <strong><span id="priceresunit">{{content.data.priceresunit}}</span></strong></h3>
          </div>
          {{/content.data.priceresunit}}
          {{#content.data.ppunit10_plutoresdunits}}
          <div class="cartodb-popup-content">
-           <h3>Community District Average Price Per Residential Unit: </h3>
-           <p id="ppunit10_plutoresdunits">{{content.data.ppunit10_plutoresdunits}}</p>
+           <h3>Community District Average Price Per Residential Unit: <strong><span id="ppunit10_plutoresdunits">{{content.data.ppunit10_plutoresdunits}}</span></strong></h3>
          </div>
          {{/content.data.ppunit10_plutoresdunits}}        
          {{#content.data.pctchngunit_10_15}}
          <div class="cartodb-popup-content">
-           <h3>Percent Difference Between Sale Price and Community District Average (2010): </h3>
-           <p id="pctchange">{{content.data.pctchngunit_10_15}}</p>
+           <h3>Percent Difference Between Sale Price and Community District Average (2010): <strong><span id="pctchange">{{content.data.pctchngunit_10_15}}</span></strong></h3>
          </div>
          {{/content.data.pctchngunit_10_15}}        
-         <div class="cartodb-popup-content">
+         <div class="cartodb-popup-content marginTop10">
           <div class="container">
             <div class="row">
               <div class="one-half column {{content.data.dobyn}}">DOB</div>
@@ -224,7 +248,7 @@
 <body>
   <div class='container'>
     <div id='logo' class='logo top left hideLogo'>
-      <img class='logoImg' src='assets/images/anhd_logo.jpg'/>
+      <a href="http://anhd.org/" target="_blank"><img class='logoImg' src='assets/images/anhd_logo.jpg'/></a>
     </div>
     <div id='hamburger' class='hamburger top right hideHamburger'>
       <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
@@ -249,24 +273,43 @@
     <div class='ui map-legend bottom right'>
       <div class="legend-cloropleth">
           <ul>
-              <li class="min">0</li>
-              <li id="maxLegendNumber" class="max">300</li>
+              <li class="min">Low risk</li>
+              <li class="max">High risk</li>
               <li class="graph">
                   <div class="colors">
-                      <div class="quartile" style="background-color:#FFFFB2"></div>
-                      <div class="quartile" style="background-color:#FECC5C"></div>
-                      <div class="quartile" style="background-color:#FD8D3C"></div>
-                      <div class="quartile" style="background-color:#F03B20"></div>
-                      <div class="quartile" style="background-color:#BD0026"></div>
+                      <div class="quartile" style="background-color:#ffffcc"></div>
+                      <div class="quartile" style="background-color:#ffeda0"></div>
+                      <div class="quartile" style="background-color:#fed976"></div>
+                      <div class="quartile" style="background-color:#feb24c"></div>
+                      <div class="quartile" style="background-color:#fd8d3c"></div>
+                      <div class="quartile" style="background-color:#fc4e2a"></div>
+                      <div class="quartile" style="background-color:#e31a1c"></div>
+                      <div class="quartile" style="background-color:#bd0026"></div>
+                      <div class="quartile" style="background-color:#800026"></div>
                   </div>
               </li>
           </ul>
       </div>
     </div>
     <div id='map'></div>
+    <!-- MODAL
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div id="openModal" class="modalDialog">
+      <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h5>Welcome to the Speculation Alert Mapping Project</h5>
+        <p>This is where some introductory text will go.  The Association for Neighborhood and Housing Development (ANHD) is the umbrella organization of 100 non-profit affordable housing and economic development groups, serving low- and moderate income residents in all five boroughs of New York City.  Since its founding in 1974, ANHD has been key in making NYC’s community development sector among the most effective in the US, providing comprehensive training, robust capacity-building and apprenticeship programs, and high-impact policy research. In the past 25 years, ANHD’s non-profit members have built over 120,000 units of affordable housing in our city’s most distressed neighborhoods.</p>
+        <label>
+          <input type="checkbox" id="toggleIntroCookie" value="NoShow">
+             Don't show this message again.
+        </label>
+      </div>
+    </div>
+
   </div>
   <script src="assets/vendor/js/cartodb.js"></script>
   <script src="assets/vendor/js/Control.Geocoder.js"></script>
+  <script src="assets/vendor/js/jquery.cookie.js"></script>
   <script src="assets/js/carto.js"></script>
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">

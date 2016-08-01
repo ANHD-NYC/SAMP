@@ -1,23 +1,47 @@
 /** dobscore choropleth **/
 #samp_plus_sold_regulated_a1_dm_merge_mapputo{
-  polygon-fill: #FFFFB2;
-  polygon-opacity: 0.7;
+  polygon-fill: #aaaaaa;
+  polygon-opacity: 0.4;
   line-color: #FFF;
   line-width: 0;
   line-opacity: 1;
 }
 #samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 100] {
-   polygon-fill: #BD0026;
+  polygon-fill: #800026;
+  polygon-opacity: 0.8;
 }
-#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 80] {
-   polygon-fill: #F03B20;
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 88.9] {
+  polygon-fill: #bd0026;
+  polygon-opacity: 0.8;
 }
-#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 60] {
-   polygon-fill: #FD8D3C;
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 77.8] {
+  polygon-fill: #e31a1c;
+  polygon-opacity: 0.8;
 }
-#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 40] {
-   polygon-fill: #FECC5C;
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 66.7] {
+  polygon-fill: #fc4e2a;
+  polygon-opacity: 0.8;
 }
-#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 20] {
-   polygon-fill: #FFFFB2;
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 55.5] {
+  polygon-fill: #fd8d3c;
+  polygon-opacity: 0.8;
+}
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 44.4] {
+  polygon-fill: #feb24c;
+  polygon-opacity: 0.8;
+}
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 33.3] {
+  polygon-fill: #fed976;
+  polygon-opacity: 0.8;
+}
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 22.2] {
+  polygon-fill: #ffeda0;
+  polygon-opacity: 0.8;
+}
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore <= 11.1] {
+  polygon-fill: #ffffcc;
+  polygon-opacity: 0.8;
+}
+#samp_plus_sold_regulated_a1_dm_merge_mapputo [ dobscore < 1] {
+   polygon-fill: #aaaaaa;
 }

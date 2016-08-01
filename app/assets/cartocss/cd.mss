@@ -3,10 +3,9 @@
   polygon-fill: #FF6600;
   polygon-opacity: 0;
   line-color: #5CA2D1;
-  line-width: 0.7;
-  line-opacity: 0.8;
+  line-width: 2;
+  line-opacity: 1;
 }
-
 #nycc::labels {
   text-name: [coundist];
   text-face-name: 'Raleway';
