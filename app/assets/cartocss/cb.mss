@@ -3,10 +3,9 @@
   polygon-fill: #2dc103;
   polygon-opacity: 0;
   line-color: #a53ed5;
-  line-width: 0.4;
+  line-width: 2;
   line-opacity: 1;
 }
-
 #nycd::labels {
   text-name: [borocd];
   text-face-name: 'Raleway';

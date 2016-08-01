@@ -99,10 +99,10 @@ app.map = (function(w, d, L, $) {
         }
 
         /* when using the layerSource object, create infowindows like so: */
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),["sampscore", "address", "dofscore", "dobscore", "rentregscore", "dobyn", "rentregyn", "props"], {infowindowTemplate: $('#sampscore_infowindow').html()});
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(1),["rentregscore", "address", "uc2014", "rentstabdiff", "rentstabpctchange", "dobyn", "props"], {infowindowTemplate: $('#rentregscore_infowindow').html()});
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(2),["dobscore", "address", "jobcount", "a1", "a2", "dm", "props", "rentregyn"], {infowindowTemplate: $('#dobscore_infowindow').html()});
-        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["dofscore", "address", "saledate", "saleprice", "priceresunit", "ppunit10_plutoresdunits", "pctchngunit_10_15", "dobyn", "rentregyn"], {infowindowTemplate: $('#dofscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(0),["cartodb_id", "sampscore", "address", "dofscore", "dobscore", "rentregscore", "dobyn", "rentregyn", "props", "unitsres", "yearbuilt"], {infowindowTemplate: $('#sampscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(1),["rentregscore", "address", "uc2014", "rentstabdiff", "rentstabpctchange", "dobyn", "props", "unitsres", "yearbuilt"], {infowindowTemplate: $('#rentregscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(2),["dobscore", "address", "jobcount", "a1", "a2", "dm", "props", "rentregyn", "unitsres", "yearbuilt"], {infowindowTemplate: $('#dobscore_infowindow').html()});
+        cdb.vis.Vis.addInfowindow(map,layer.getSubLayer(3),["dofscore", "address", "saledate", "saleprice", "priceresunit", "ppunit10_plutoresdunits", "pctchngunit_10_15", "dobyn", "rentregyn", "unitsres", "yearbuilt"], {infowindowTemplate: $('#dofscore_infowindow').html()});
 
 
         // very sloppy example tooltip creation
@@ -137,10 +137,10 @@ app.map = (function(w, d, L, $) {
         });
 
         mapLayers[3].on('featureClick', function(e, latlng, pos, data, layer) {
+          $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
           $('#saleprice').text("$" + numberWithCommas(parseInt($('#saleprice').text())));
           $('#priceresunit').text("$" + numberWithCommas(parseInt($('#priceresunit').text())));
           $('#ppunit10_plutoresdunits').text("$" + numberWithCommas(parseInt($('#ppunit10_plutoresdunits').text())));
-          $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
         });
 
       })
@@ -355,6 +355,21 @@ app.map = (function(w, d, L, $) {
 
   }
 
+  function showModalonPageLoad() {
+    if (!$.cookie('noIntro')) {
+      location.href = "#";
+      location.href = "#openModal";
+      // set cookie if don't show this message is checked
+      $('#toggleIntroCookie').change(function() {
+        if($(this).is(":checked")) {
+          $.cookie('noIntro', 'noIntro', { expires: 365, path: '/' });
+        } else {
+          $.removeCookie('noIntro', { path: '/' });
+        }
+      });
+    }
+  }
+
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -365,6 +380,7 @@ app.map = (function(w, d, L, $) {
     wireLayerBtns();
     createSelect();
     setupToggleListener();
+    showModalonPageLoad();
   }
 
   return {
