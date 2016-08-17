@@ -10,7 +10,7 @@ html, body {
   height: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 0 44px 0;
 }
 
 #map {
@@ -29,7 +29,7 @@ html, body {
 }
 
 .bottom {
-  bottom: 25px;
+  bottom: 69px;
 }
 
 .right {
@@ -336,7 +336,48 @@ div.cartodb-tooltip-content p {
   text-decoration: none;
 }
 
-
+/**** Navbar CSS ****/
+.navbar,
+.navbar-spacer {
+  display: block;
+  width: 100%;
+  height: 44px;
+  background: #000;
+  z-index: 99;
+  border-bottom: 2px solid #eee; }
+.navbar-spacer {
+  display: none; }
+.navbar > .container-nav {
+  width: 100%; 
+  max-width: 950px;
+  position: relative;
+  margin: 0 auto;
+}
+.navbar-list {
+  list-style: none;
+  margin-bottom: 0; }
+.navbar-item {
+  position: relative;
+  float: left;
+  margin-bottom: 0; }
+.navbar-link {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: normal;
+  font-family: helvetica, sans-serif;
+  margin-right: 35px;
+  text-decoration: none;
+  line-height: 44px;
+  color: #969696;
+  transition: color 0.4s ease 0s;
+}
+.navbar-link:hover {
+  color: #ffffff;
+  transition: color 0.4s ease 0s;  
+}
+.navbar-link.active {
+  color: #ffffff; 
+}
 
 
 @media (min-width: 550px) {
