@@ -1,6 +1,6 @@
-# ANHD SAMP MAP
+# ANHD DAP MAP
 Developed by the [Association For Neighborhood and Housing Development, Inc.
-(ANHD)](http://www.anhd.org), the Speculation Alert Mapping Project (SAMP) is to
+(ANHD)](http://www.anhd.org), the Displacement Alert Project (DAP) is to
 be an important new organizing, advocacy, and policy development tool that provides
 crucial information about recent building transactions where tenants might be facing
 excessive displacement pressure.
