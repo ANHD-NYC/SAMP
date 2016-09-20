@@ -8,7 +8,7 @@
 }
 #nycd::labels {
   text-name: [borocd];
-  text-face-name: 'Raleway';
+  text-face-name: 'DejaVu Sans Bold';
   text-size: 14;
   text-label-position-tolerance: 0;
   text-fill: #a53ed5;

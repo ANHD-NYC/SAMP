@@ -14,7 +14,7 @@ html, body {
 }
 
 .mainContainer {
-  padding-bottom: 44px;
+  max-height: 94vh;
 }
 
 #map {
@@ -33,7 +33,7 @@ html, body {
 }
 
 .bottom {
-  bottom: 69px;
+  bottom: 20px;
 }
 
 .right {
