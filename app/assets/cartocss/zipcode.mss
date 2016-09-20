@@ -15,7 +15,7 @@
   text-halo-fill: #333333;
   text-halo-radius: 1;
   text-dy: 0;
-  text-allow-overlap: true;
+  text-allow-overlap: false;
   text-placement: interior;
   text-placement-type: simple;
 }
