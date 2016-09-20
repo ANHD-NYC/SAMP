@@ -29,6 +29,10 @@
      "type": "number",
      "default": 1
     },
+    "layer6": {
+     "type": "number",
+     "default": 1
+    },
     "color": {
       "type": "css_color",
       "default": "#FF6600"
@@ -40,6 +44,10 @@
     "nycd_boundary": {
       "type": "css_color",
       "default": "blue"
+    },
+    "zipcode_boundary": {
+      "type": "css_color",
+      "default": "green"
     }
   },
   "layergroup": {
@@ -95,6 +103,15 @@
           "cartocss_version": "2.1.1",
           "cartocss": "#nycc{polygon-fill:#FF6600;polygon-opacity:0;line-color:#5CA2D1;line-width:2;line-opacity:1;}#nycc::labels{text-name:[coundist];text-face-name:'DejaVu Sans Bold';text-size:14;text-label-position-tolerance:0;text-fill:#5CA2D1;text-halo-fill:#333333;text-halo-radius:1;text-allow-overlap:true;text-placement:interior;text-placement-type:simple;}",
           "sql": "select * from nycc_merge where <%= layer5 %> = 1",
+          "interactivity": ["cartodb_id"]
+        }
+      },
+      {
+        "type": "cartodb",
+        "options": {
+          "cartocss_version": "2.1.1",
+          "cartocss": "#zipcode{polygon-fill:#FF6600;polygon-opacity:0;line-color:#229A00;line-width:2;line-opacity:1;}#zipcode::labels{text-name:[zipcode];text-face-name:'DejaVu Sans Bold';text-size:14;text-label-position-tolerance:0;text-fill:#229A00;text-halo-fill:#333333;text-halo-radius:1;text-allow-overlap:false;text-placement:interior;text-placement-type:simple;}",
+          "sql": "select * from nyc_zip_codes where <%= layer6 %> = 1",
           "interactivity": ["cartodb_id"]
         }
       }

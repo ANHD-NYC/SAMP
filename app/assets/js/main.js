@@ -79,6 +79,9 @@ app.map = (function(w, d, L, $) {
           },
           {
             layer_name: "cd",
+          },
+          {
+            layer_name: "zipcode",
           }
         ]
       }
@@ -126,6 +129,8 @@ app.map = (function(w, d, L, $) {
         mapLayers[4].setInteraction(false);
         mapLayers[5].hide(); // city council districts
         mapLayers[5].setInteraction(false);
+        mapLayers[6].hide(); // city council districts
+        mapLayers[6].setInteraction(false);
 
         // using the layerSource you can alter a "placeholder"
         // value from the template like so:
@@ -203,8 +208,9 @@ app.map = (function(w, d, L, $) {
       },
       cd: function() {
         // hide / show council districts
-        if (mapLayers[4].isVisible()) {
+        if (mapLayers[4].isVisible() || mapLayers[6].isVisible()) {
           mapLayers[4].hide();
+          mapLayers[6].hide();
           $('.go-to-cb :nth-child(1)').prop('selected', true);          
         }
         if (mapLayers[5].isVisible()) {
@@ -216,14 +222,29 @@ app.map = (function(w, d, L, $) {
       },
       cb: function() {
         // hide / show community boards
-        if (mapLayers[5].isVisible()) {
+        if (mapLayers[5].isVisible() || mapLayers[6].isVisible()) {
           mapLayers[5].hide();
+          mapLayers[6].hide();
           $('.go-to-cc :nth-child(1)').prop('selected', true);
         }
         if (mapLayers[4].isVisible()) {
           mapLayers[4].hide();
         } else {
           mapLayers[4].show();
+        }
+        return true;
+      },
+      zipcode: function() {
+        // hide / show community boards
+        if (mapLayers[4].isVisible() || mapLayers[5].isVisible()) {
+          mapLayers[4].hide();
+          mapLayers[5].hide();
+          $('.go-to-zipcode :nth-child(1)').prop('selected', true);
+        }
+        if (mapLayers[6].isVisible()) {
+          mapLayers[6].hide();
+        } else {
+          mapLayers[6].show();
         }
         return true;
       }
@@ -264,13 +285,21 @@ app.map = (function(w, d, L, $) {
     // sets up the select / dropdowns for community boards
     // and council districts
     function createOptions(arr, name) {
-      var toReturn = '';
-      var first = name === 'coundist' ? '<option val="0">Select a Council District</option>' :
-        '<option val="0">Select a Community Board</option>';
-      var geoName = name === 'coundist' ? 'Council District ' : 'Community Board ';
+      var toReturn = '',
+          first = '',
+          geoName = '';
+      if (name === 'coundist') {
+        first = '<option val="0">Select a Council District</option>';
+        geoName = 'Council District ';
+      } else if (name === 'borocd') {
+        first = '<option val="0">Select a Community Board</option>';
+        geoName = 'Community Board ';
+      } else {
+        first = '<option val="0">Select a Zip Code</option>';
+        geoName = '';
+      }
 
       toReturn += first;
-
       toReturn += arr.map(function(el){
         return '<option value="' + el[name] + '">' +
           geoName + el[name] + '</option>';
@@ -284,7 +313,7 @@ app.map = (function(w, d, L, $) {
     }
 
     function initCC() {
-      sql.execute('SELECT coundist FROM nycc order by coundist asc')
+      sql.execute('SELECT coundist FROM nycc ORDER BY coundist ASC')
         .done(function(data){
           buildSelect('.go-to-cc', createOptions(data.rows, 'coundist'));
           initCB();
@@ -292,18 +321,27 @@ app.map = (function(w, d, L, $) {
     }
 
     function initCB() {
-      sql.execute('SELECT borocd FROM nycd order by borocd asc')
+      sql.execute('SELECT borocd FROM nycd ORDER BY borocd ASC')
         .done(function(data){
           buildSelect('.go-to-cb', createOptions(data.rows, 'borocd'));
+          initZipCode();
+        });
+    }
+
+    function initZipCode() {
+      sql.execute('SELECT zipcode FROM nyc_zip_codes GROUP BY zipcode ORDER BY zipcode ASC')
+        .done(function(data){
+          buildSelect('.go-to-zipcode', createOptions(data.rows, 'zipcode'));
           selectEvents();
         });
     }
 
-
     function selectEvents() {
       $('.go-to-cc').on('change', function(e){
-        // set the other select to first option
+        // set the other selects to first option
         $('.go-to-cb :nth-child(1)').prop('selected', true);
+        $('.go-to-zipcode :nth-child(1)').prop('selected', true);
+        console.log($(this).val());
         getCC($(this).val());
         $('.radio2').removeClass('selected');
         $('#cd').addClass('selected');
@@ -312,9 +350,20 @@ app.map = (function(w, d, L, $) {
       $('.go-to-cb').on('change', function(e){
         // set the other select to first option
         $('.go-to-cc :nth-child(1)').prop('selected', true);
+        $('.go-to-zipcode :nth-child(1)').prop('selected', true);
+        console.log($(this).val());
         getCB($(this).val());
         $('.radio2').removeClass('selected');
         $('#cb').addClass('selected');
+      });
+
+      $('.go-to-zipcode').on('change', function(e){
+        // set the other select to first option
+        $('.go-to-cb :nth-child(1)').prop('selected', true);
+        $('.go-to-cc :nth-child(1)').prop('selected', true);
+        getZipCode($(this).val());
+        $('.radio2').removeClass('selected');
+        $('#zipcode').addClass('selected');
       });
     }
 
@@ -329,6 +378,7 @@ app.map = (function(w, d, L, $) {
         .done(function(data){
           mapLayers[4].hide();
           mapLayers[5].show();
+          mapLayers[6].hide();
           map.fitBounds(data);
         });
     }
@@ -340,8 +390,23 @@ app.map = (function(w, d, L, $) {
     if (num !==0) {
       sql.getBounds('SELECT * FROM nycd WHERE borocd = {{id}}', { id: num })
         .done(function(data){
-          mapLayers[5].hide();
           mapLayers[4].show();
+          mapLayers[5].hide();
+          mapLayers[6].hide();
+          map.fitBounds(data);
+        });
+    }
+  }
+
+  function getZipCode(num) {
+    // to set the map position to a zip code
+    // zero means the first option in the select
+    if (num !==0) {
+      sql.getBounds("SELECT * FROM nyc_zip_codes WHERE zipcode = '{{id}}'", { id: num })
+        .done(function(data){
+          mapLayers[5].hide();
+          mapLayers[4].hide();
+          mapLayers[6].show();
           map.fitBounds(data);
         });
     }
