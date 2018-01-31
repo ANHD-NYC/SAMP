@@ -368,11 +368,11 @@ div.cartodb-tooltip-content p {
   transition: color 0.4s ease 0s;
 }
 .navbar-link:hover {
-  color: #ffffff;
+  color: #ff6601;
   transition: color 0.4s ease 0s;  
 }
 .navbar-link.active {
-  color: #ffffff; 
+  color: #FDAF7E; 
 }
 
 
@@ -383,7 +383,8 @@ div.cartodb-tooltip-content p {
     height: 44px;
     background: #000;
     z-index: 99;
-    border-bottom: 2px solid #eee; }
+    /* border-bottom: 2px solid #eee; */
+  }
   .mainContainer {
     max-height: 94vh; }
   .hideHamburger {
