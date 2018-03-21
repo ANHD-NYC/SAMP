@@ -142,10 +142,18 @@ app.map = (function(w, d, L, $) {
         });
 
         mapLayers[3].on('featureClick', function(e, latlng, pos, data, layer) {
-          $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
-          $('#saleprice').text("$" + numberWithCommas(parseInt($('#saleprice').text())));
-          $('#priceresunit').text("$" + numberWithCommas(parseInt($('#priceresunit').text())));
-          $('#ppunit10_plutoresdunits').text("$" + numberWithCommas(parseInt($('#ppunit10_plutoresdunits').text())));
+          if ($('#pctchange').text().indexOf('%') == -1) {
+            $('#pctchange').text((parseFloat($('#pctchange').text())*100).toFixed(0) + "%");
+          }
+          if ($('#saleprice').text().indexOf('$') == -1) {
+            $('#saleprice').text("$" + numberWithCommas(parseInt($('#saleprice').text())));
+          }
+          if ($('#priceresunit').text().indexOf('$') == -1) {
+            $('#priceresunit').text("$" + numberWithCommas(parseInt($('#priceresunit').text())));
+          }
+          if ($('#ppunit10_plutoresdunits').text().indexOf('$') == -1) {
+            $('#ppunit10_plutoresdunits').text("$" + numberWithCommas(parseInt($('#ppunit10_plutoresdunits').text())));
+          }
         });
 
       })
@@ -161,6 +169,7 @@ app.map = (function(w, d, L, $) {
       sampscore: function() {
         if (mapLayers[0].isVisible()) {
           mapLayers[0].hide();
+          $('.cartodb-infowindow').css('visibility', 'hidden');
         } else {
           hideAllLayers();
           mapLayers[0].show();
@@ -173,6 +182,7 @@ app.map = (function(w, d, L, $) {
       rentregscore: function() {
         if (mapLayers[1].isVisible()) {
           mapLayers[1].hide();
+          $('.cartodb-infowindow').css('visibility', 'hidden');
         } else {
           hideAllLayers();
           mapLayers[1].show();
@@ -185,6 +195,7 @@ app.map = (function(w, d, L, $) {
       dobscore: function() {
         if (mapLayers[2].isVisible()) {
           mapLayers[2].hide();
+          $('.cartodb-infowindow').css('visibility', 'hidden');
         } else {
           hideAllLayers();
           mapLayers[2].show();
@@ -197,6 +208,7 @@ app.map = (function(w, d, L, $) {
       dofscore: function() {
         if (mapLayers[3].isVisible()) {
           mapLayers[3].hide();
+          $('.cartodb-infowindow').css('visibility', 'hidden');
         } else {
           hideAllLayers();
           mapLayers[3].show();
@@ -255,6 +267,7 @@ app.map = (function(w, d, L, $) {
       mapLayers[1].hide();
       mapLayers[2].hide();
       mapLayers[3].hide();
+      $('.cartodb-infowindow').css('visibility', 'hidden');
     }
 
     $('.radio1').click(function(e) {
